@@ -54,9 +54,9 @@ class GlossDocument(Document):
         sqlalchemy.ForeignKey('documents.id'),
         primary_key=True
     )
-
     type_info = Document.type_info.copy(
         name=u'GlossDocument',
-        title=u'GlossDocument'
+        title=u'GlossDocument',
+        add_view=u'add_glossdoc',
     )
-    type_info.edit_links.append(Link('scan-glossary', title=u'scan-glossary'),)
+    type_info.edit_links.append(Link('scan-glossary', title=u'scan-glossary'))

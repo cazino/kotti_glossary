@@ -10,6 +10,7 @@ def kotti_configure(settings):
     settings['kotti.available_types'] += \
         ' kotti_glossary.resources.GlossDocument'
     settings['pyramid.includes'] += ' kotti_glossary'
+    settings['pyramid.includes'] += ' kotti_glossary.views'
 
 
 def includeme(config):

@@ -1,4 +1,6 @@
-
+from kotti.views.edit.content import DocumentSchema
+from kotti.views.form import AddFormView
+from kotti.views.form import EditFormView
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 from pyramid.view import view_defaults
@@ -30,12 +32,42 @@ class NodeActions(object):
             url = self.request.referrer
         return HTTPFound(location=url)
 
-    @view_config(name='scan-glossary', context=GlossDocument)
+    @view_config(name='scan-glossary')
     def scan_glossary(self):
         """
         """
         body = self.context.body
         proc = TermsProcessor(body)
         proc.transform_terms()
-        proc.apply_glossary(dict())
+        try:
+            proc.apply_glossary(dict())
+        except KeyError as e:
+            self.request.session.flash('Unkown term: %s' % e)
         return self.back()
+
+
+class GlossDocAddForm(AddFormView):
+    schema_factory = DocumentSchema
+    add = GlossDocument
+    item_type = u"GlossDocument"
+
+
+class GlossDocEditForm(EditFormView):
+    schema_factory = DocumentSchema
+
+
+def includeme(config):
+    config.add_view(
+        GlossDocAddForm,
+        name=GlossDocument.type_info.add_view,
+        permission='add',
+        renderer='kotti:templates/edit/node.pt',
+    )
+
+    config.add_view(
+        GlossDocEditForm,
+        context=GlossDocument,
+        name='edit',
+        permission='edit',
+        renderer='kotti:templates/edit/node.pt',
+    )
