@@ -32,8 +32,8 @@ class TermsProcessor(object):
             term = token[match_start:match_end].replace("term:", '')
             res.append(self._create_anchor(term))
             start = match_end
-        if start < end:
-            res += res.append(self._create_text(token[start:]))
+        if start < end and start != 0:
+            res.append(self._create_text(token[start:]))
         return res
 
     def transform_terms(self):
@@ -42,10 +42,11 @@ class TermsProcessor(object):
         text_tokens = self.soup.find_all(text=True)
         for token in text_tokens:
             elems = self._create_elems(token)
-            parent = token.parent
-            token.extract()
-            for elem in elems:
-                parent.append(elem)
+            if elems:
+                parent = token.parent
+                token.extract()
+                for elem in elems:
+                    parent.append(elem)
         return str(self.soup)
 
     def _is_gl(self, tag):

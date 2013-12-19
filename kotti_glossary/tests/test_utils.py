@@ -33,6 +33,13 @@ class TestTransformTerms(unittest.TestCase):
         expected = '<a data-glossary-term="toto" href="">toto</a>'
         self.assertEquals(expected, tm.transform_terms())
 
+    def test_what(self):
+        text = u'<p>toto <strong>term:tata</strong></p>'
+        tm = self._makeOne(text)
+        expected = ('<p>toto <strong><a data-glossary-term="tata" href="">' +
+                    'tata</a></strong></p>')
+        self.assertEquals(expected, tm.transform_terms())
+
 
 class TestApplyGlossary(unittest.TestCase):
 
