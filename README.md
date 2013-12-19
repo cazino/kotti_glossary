@@ -1,2 +1,0 @@
-kotti_glossary
-==============
