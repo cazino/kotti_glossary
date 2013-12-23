@@ -8,7 +8,9 @@ Created on 2013-12-17
 
 def kotti_configure(settings):
     settings['kotti.available_types'] += \
-        ' kotti_glossary.resources.GlossDocument'
+        ' kotti_glossary.resources.GlossDocument' + \
+        ' kotti_glossary.resources.Glossary' +\
+        ' kotti_glossary.resources.Term'
     settings['pyramid.includes'] += ' kotti_glossary'
     settings['pyramid.includes'] += ' kotti_glossary.views'
 

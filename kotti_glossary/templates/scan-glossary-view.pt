@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  metal:use-macro="api.macro('kotti:templates/edit/master.pt')"
+  i18n:domain="Kotti">
+
+  <div metal:fill-slot="content">
+    <h1 i18n:translate="">Navigate Site</h1>
+    <form action="${request.url}" method="post" id="form-move-2">
+        <ul i18n:domain="Kotti">
+            <li tal:repeat="glossary glossaries">
+                <input type= "radio" name="tarif" value="jour" />
+            </li>
+        </ul>
+        <div class="form-actions">
+            <button type="submit" name="delete" value="delete" 
+                class="btn btn-danger" i18n:translate="">Go</button>
+            </div>
+        </form>
+    </div>
+
+</html>

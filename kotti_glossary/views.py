@@ -1,3 +1,6 @@
+import operator
+
+from kotti import DBSession
 from kotti.views.edit.content import DocumentSchema
 from kotti.views.form import AddFormView
 from kotti.views.form import EditFormView
@@ -5,7 +8,8 @@ from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 from pyramid.view import view_defaults
 
-from .resources import GlossDocument
+from .resources import GlossDocument, Glossary, Term
+from .schemas import GlossarySchema, TermSchema
 from .utils import TermsProcessor
 
 
@@ -32,18 +36,38 @@ class NodeActions(object):
             url = self.request.referrer
         return HTTPFound(location=url)
 
-    @view_config(name='scan-glossary')
+    @view_config(name='scan-glossary', permission='view',
+                 renderer='kotti_glossary:templates/scan-glossary-view.pt')
     def scan_glossary(self):
         """
         """
-        body = self.context.body
-        proc = TermsProcessor(body)
-        proc.transform_terms()
-        try:
-            proc.apply_glossary(dict())
-        except KeyError as e:
-            self.request.session.flash('Unkown term: %s' % e)
-        return self.back()
+        result = list()
+        for node in DBSession.query(Glossary):
+            result.append(node)
+        return dict(glossaries=result)
+
+
+        #body = self.context.body
+        #prerm = TermsProcessor(body)
+        #proc.transform_terms()
+        #try:
+        #    proc.apply_glossary(dict())
+        #except KeyError as e:
+        #    self.request.session.flash('Unkown term: %s' % e)
+        #return self.back()
+
+
+@view_config(name='view', context=Glossary,
+             permission='view',
+             renderer='kotti_glossary:templates/view-glossary.pt')
+def view_glossary(context, request):
+
+    def key_gettter(obj):
+        return obj.title.lower()
+
+    terms = context.children
+    terms.sort(key=key_gettter)
+    return dict(glossary=context, terms=terms)
 
 
 class GlossDocAddForm(AddFormView):
@@ -54,6 +78,26 @@ class GlossDocAddForm(AddFormView):
 
 class GlossDocEditForm(EditFormView):
     schema_factory = DocumentSchema
+
+
+class GlossaryAddForm(AddFormView):
+    schema_factory = GlossarySchema
+    add = Glossary
+    item_type = u"Glossary"
+
+
+class GlossaryEditForm(EditFormView):
+    schema_factory = GlossarySchema
+
+
+class TermAddForm(AddFormView):
+    schema_factory = TermSchema
+    add = Term
+    item_type = u"Term"
+
+
+class TermEditForm(EditFormView):
+    schema_factory = TermSchema
 
 
 def includeme(config):
@@ -67,6 +111,34 @@ def includeme(config):
     config.add_view(
         GlossDocEditForm,
         context=GlossDocument,
+        name='edit',
+        permission='edit',
+        renderer='kotti:templates/edit/node.pt',
+    )
+    config.add_view(
+        GlossaryAddForm,
+        name=Glossary.type_info.add_view,
+        permission='add',
+        renderer='kotti:templates/edit/node.pt',
+    )
+
+    config.add_view(
+        GlossaryAddForm,
+        context=Glossary,
+        name='edit',
+        permission='edit',
+        renderer='kotti:templates/edit/node.pt',
+    )
+    config.add_view(
+        TermAddForm,
+        name=Term.type_info.add_view,
+        permission='add',
+        renderer='kotti:templates/edit/node.pt',
+    )
+
+    config.add_view(
+        TermEditForm,
+        context=Term,
         name='edit',
         permission='edit',
         renderer='kotti:templates/edit/node.pt',

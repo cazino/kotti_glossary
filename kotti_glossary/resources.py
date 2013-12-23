@@ -8,6 +8,8 @@ class Glossary(Content):
         sqlalchemy.Integer(), sqlalchemy.ForeignKey('contents.id'),
         primary_key=True)
 
+    title = sqlalchemy.Column(sqlalchemy.String(255), nullable=False)
+
     type_info = Content.type_info.copy(
         name=u'Glossary',
         title=u'Glossary',
@@ -22,28 +24,14 @@ class Term(Content):
         sqlalchemy.Integer(), sqlalchemy.ForeignKey('contents.id'),
         primary_key=True)
 
-    name = sqlalchemy.Column(sqlalchemy.String(255), nullable=False)
+    title = sqlalchemy.Column(sqlalchemy.String(255), nullable=False)
+    definition = sqlalchemy.Column(sqlalchemy.Text)
 
     type_info = Content.type_info.copy(
         name=u'Term',
         title=u'Term',
         add_view=u'add_term',
         addable_to=[u'Glossary'],
-    )
-
-
-class Definition(Content):
-    id = sqlalchemy.Column(
-        sqlalchemy.Integer(), sqlalchemy.ForeignKey('contents.id'),
-        primary_key=True)
-
-    body = sqlalchemy.Column(sqlalchemy.Text)
-
-    type_info = Content.type_info.copy(
-        name=u'Term',
-        title=u'Term',
-        add_view=u'add_term',
-        addable_to=[u'Term'],
     )
 
 

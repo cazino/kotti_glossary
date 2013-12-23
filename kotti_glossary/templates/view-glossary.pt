@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      metal:use-macro="api.macro('kotti:templates/view/master.pt')">
+
+  <article metal:fill-slot="content" class="document-view content">
+    <h1>${context.title}</h1>
+    <p class="description">
+      ${context.description}
+    </p>
+    <div tal:replace="api.render_template('kotti:templates/view/tags.pt')" />
+    <dl>
+      <span tal:repeat="term terms" tal:omit-tag="">
+        <dt tal:content="term.title" id="term-${term.title}"></dt>
+        <dd tal:content="term.definition"></dd>
+      </span>
+    </dl>
+  </article>
+
+</html>
