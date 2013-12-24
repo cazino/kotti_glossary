@@ -13,6 +13,7 @@ class TermsProcessor(object):
     def _create_anchor(self, term):
         anchor = self.soup.new_tag('a')
         anchor['data-glossary-term'] = term
+        anchor['href'] = ""
         anchor.append(term)
         return anchor
 
@@ -51,7 +52,7 @@ class TermsProcessor(object):
     def _is_gl(self, tag):
         return tag.name == 'a' and tag.has_attr('data-glossary-term')
 
-    def apply_glossary(self, glossary, base_url):
+    def apply_glossary(self, glossary):
         """glossary: dict of term: url
         """
         for link in self.soup.find_all(self._is_gl):
