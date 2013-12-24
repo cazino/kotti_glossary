@@ -1,5 +1,5 @@
 from kotti.resources import Content, Document
-from kotti.util import Link
+from kotti.util import Link, LinkParent
 import sqlalchemy
 
 
@@ -58,4 +58,8 @@ class GlossDocument(Document):
         title=u'GlossDocument',
         add_view=u'add_glossdoc',
     )
-    type_info.edit_links.append(Link('scan-terms', title=u'scan-terms'))
+    type_info.edit_links.append(
+        LinkParent(
+            title=u'Glossary actions',
+            children=[Link('scan-terms', title=u'Scan terms'),
+                      Link('reset-terms', title=u'Reset terms')]))

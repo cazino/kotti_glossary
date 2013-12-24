@@ -53,6 +53,13 @@ class NodeActions(object):
             result.append(node)
         return dict(glossaries=result)
 
+    @view_config(name='reset-terms', permission='view')
+    def reset_terms(self):
+        body = self.context.body
+        proc = TermsProcessor(body)
+        self.context.body = proc.reset_anchors()
+        return HTTPFound(location=self.request.resource_url(self.context))
+
 
 @view_config(name='view', context=Glossary,
              permission='view',
