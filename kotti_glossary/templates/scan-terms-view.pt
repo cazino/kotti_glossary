@@ -5,7 +5,7 @@
   i18n:domain="Kotti">
 
   <div metal:fill-slot="content">
-    <h1 i18n:translate="">Navigate Site</h1>
+    <h1 i18n:translate="">Choose a glossary</h1>
     <form action="${request.url}" method="post" id="form-move-2">
       <table>
         <tr tal:repeat="glossary glossaries">
