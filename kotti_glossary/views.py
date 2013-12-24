@@ -1,5 +1,3 @@
-import operator
-
 from kotti import DBSession
 from kotti.views.edit.content import DocumentSchema
 from kotti.views.form import AddFormView
@@ -36,25 +34,24 @@ class NodeActions(object):
             url = self.request.referrer
         return HTTPFound(location=url)
 
-    @view_config(name='scan-glossary', permission='view',
-                 renderer='kotti_glossary:templates/scan-glossary-view.pt')
-    def scan_glossary(self):
+    @view_config(name='scan-terms', permission='view',
+                 renderer='kotti_glossary:templates/scan-terms-view.pt')
+    def scan_terms(self):
         """
         """
+        if 'scan-terms' in self.request.POST:
+            body = self.context.body
+            proc = TermsProcessor(body)
+            _id = self.request.POST['glossary_id']
+            glossary = DBSession.query(Glossary).get(_id)
+            terms_dict = glossary.get_terms(self.request)
+            proc.reset_anchors()
+            self.context.body = proc.insert_anchors(terms_dict)
+            return HTTPFound(location=self.request.resource_url(self.context))
         result = list()
         for node in DBSession.query(Glossary):
             result.append(node)
         return dict(glossaries=result)
-
-
-        #body = self.context.body
-        #prerm = TermsProcessor(body)
-        #proc.transform_terms()
-        #try:
-        #    proc.apply_glossary(dict())
-        #except KeyError as e:
-        #    self.request.session.flash('Unkown term: %s' % e)
-        #return self.back()
 
 
 @view_config(name='view', context=Glossary,

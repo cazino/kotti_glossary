@@ -7,13 +7,14 @@
   <div metal:fill-slot="content">
     <h1 i18n:translate="">Navigate Site</h1>
     <form action="${request.url}" method="post" id="form-move-2">
-        <ul i18n:domain="Kotti">
-            <li tal:repeat="glossary glossaries">
-                <input type= "radio" name="tarif" value="jour" />
-            </li>
-        </ul>
+      <table>
+        <tr tal:repeat="glossary glossaries">
+          <td><input type= "radio" name="glossary_id" value="${glossary.id}" /></td>
+          <td tal:content="glossary.title"></td>
+        </tr>
+      </table>
         <div class="form-actions">
-            <button type="submit" name="delete" value="delete" 
+            <button type="submit" name="scan-terms" value="scan-terms" 
                 class="btn btn-danger" i18n:translate="">Go</button>
             </div>
         </form>

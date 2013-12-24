@@ -17,6 +17,17 @@ class Glossary(Content):
         addable_to=[u'Document'],
     )
 
+    def get_terms(self, request):
+        """Retrurns a adict of term: url.
+        """
+        res = dict()
+        for term in self.children:
+            title = term.title
+            anchor = 'term-%s' % title
+            url = request.resource_url(self, anchor=anchor)
+            res[title] = url
+        return res
+
 
 class Term(Content):
 
@@ -47,4 +58,4 @@ class GlossDocument(Document):
         title=u'GlossDocument',
         add_view=u'add_glossdoc',
     )
-    type_info.edit_links.append(Link('scan-glossary', title=u'scan-glossary'))
+    type_info.edit_links.append(Link('scan-terms', title=u'scan-terms'))
