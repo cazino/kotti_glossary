@@ -46,6 +46,10 @@ class Term(Content):
     )
 
 
+def isglossdoc(context, request):
+    return isinstance(context, GlossDocument)
+
+
 class GlossDocument(Document):
 
     id = sqlalchemy.Column(
@@ -58,8 +62,15 @@ class GlossDocument(Document):
         title=u'GlossDocument',
         add_view=u'add_glossdoc',
     )
-    type_info.edit_links.append(
-        LinkParent(
-            title=u'Glossary actions',
-            children=[Link('scan-terms', title=u'Scan terms'),
-                      Link('reset-terms', title=u'Reset terms')]))
+
+GlossDocument.type_info.edit_links.append(
+    LinkParent(
+        title=u'Glossary actions',
+        children=[Link('scan-terms',
+                       title=u'Scan terms',
+                       predicate=isglossdoc),
+                  Link('reset-terms',
+                       title=u'Reset terms',
+                       predicate=isglossdoc)],
+    )
+)
