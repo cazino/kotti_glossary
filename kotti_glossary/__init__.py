@@ -4,6 +4,10 @@
 Created on 2013-12-17
 :author: Emmanuel Cazenave (cazino)
 """
+from pyramid.i18n import TranslationStringFactory
+
+
+_ = TranslationStringFactory('kotti_avocatsport')
 
 
 def kotti_configure(settings):
