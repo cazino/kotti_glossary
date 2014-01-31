@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kotti_glossary 0.1dev\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-01-30 11:37+0100\n"
+"POT-Creation-Date: 2014-01-31 13:12+0100\n"
 "PO-Revision-Date: 2014-01-30 11:37+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: fr_FR <LL@li.org>\n"
@@ -17,4 +17,48 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
+
+#: kotti_glossary/resources.py:70
+msgid "Glossary actions"
+msgstr "Action de glossaire"
+
+#: kotti_glossary/resources.py:72
+msgid "Scan terms"
+msgstr "Créer des liens"
+
+#: kotti_glossary/resources.py:75
+msgid "Reset terms"
+msgstr "Supprimer les liens"
+
+#: kotti_glossary/schemas.py:10 kotti_glossary/schemas.py:17
+msgid "Title"
+msgstr "Titre"
+
+#: kotti_glossary/schemas.py:21
+msgid "Definition"
+msgstr "Définition"
+
+#: kotti_glossary/templates/scan-glossary.pt:8
+msgid "Edit"
+msgstr "Editer"
+
+#: kotti_glossary/templates/scan-terms-view.pt:8
+msgid "Choose a glossary"
+msgstr "Choisir un glossaire"
+
+#: kotti_glossary/templates/scan-terms-view.pt:17
+msgid "Go"
+msgstr ""
+
+#: kotti_glossary/templates/scan.pt:9
+msgid "Delete ${title}"
+msgstr "Supprimer ${title}"
+
+#: kotti_glossary/templates/scan.pt:18
+msgid "Are you sure you want to delete ${title}?"
+msgstr "Etes vous sur de vouloir supprimer ${title}?"
+
+#: kotti_glossary/templates/scan.pt:22
+msgid "Delete"
+msgstr "Supprimer"
 

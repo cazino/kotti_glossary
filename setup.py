@@ -47,7 +47,7 @@ setup(
     extras_require={},
     test_suite="kotti_glossary.tests",
     message_extractors={
-        'kotti_media': [
+        'kotti_glossary': [
             ('**.py', 'lingua_python', None),
             ('**.zcml', 'lingua_xml', None),
             ('**.pt', 'lingua_xml', None),
